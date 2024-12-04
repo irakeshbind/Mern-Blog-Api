@@ -1,9 +1,10 @@
 const express = require('express')
 const app = express();
+const bodyParser = require('body-parser')
+const userCateory = require('./routes/category');
+const mongoose = require('mongoose');
 
-const userCateory = require('./routes/cateory');
-const mongoose=require('mongoose');
-mongoose.connect('mongodb+srv://nm:12@test-pro-db.0tlsn.mongodb.net')
+mongoose.connect('mongodb+srv://hotel:12@cluster0.kwtl9.mongodb.net/')
 .then(()=>{
         console.log("Connected with database");
          })
@@ -11,8 +12,13 @@ mongoose.connect('mongodb+srv://nm:12@test-pro-db.0tlsn.mongodb.net')
             console.log("Database is not connect");
          })
 
+
+// app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
 app.use('/cat',userCateory)
 
 
 
 module.exports = app;
+
+         
