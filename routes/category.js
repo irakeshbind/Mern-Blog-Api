@@ -42,9 +42,13 @@ router. get('/all-category',(req,res)=>{
 
 })
 
-router. get('/all-category/:id',(req,res)=>{
-    Category.find({id:req.params.id})
-    .then(result=>{
+
+
+// delete category by id 
+router.delete('/delete-category/:id',(req,res)=>{
+    console.log(req.params.id) //isame received kia jaye
+    Category.findByIdAndDelete(req.params.id)
+        .then(result=>{
         res.status(200).json({
             category:result
         })
@@ -55,7 +59,7 @@ router. get('/all-category/:id',(req,res)=>{
             error:err
         })
     })
-
+    
 })
 
 
