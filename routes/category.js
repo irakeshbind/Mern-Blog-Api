@@ -44,6 +44,8 @@ router. get('/all-category',(req,res)=>{
 
 
 
+
+
 // delete category by id 
 router.delete('/delete-category/:id',(req,res)=>{
     // console.log(req.params.id)

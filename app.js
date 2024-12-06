@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express();
 const bodyParser = require('body-parser')
-const userCateory = require('./routes/category');
+const cateoryRoute = require('./routes/category');
+const blogRoute = require('./routes/blog')
 const mongoose = require('mongoose');
+// const fileupload = require('express-fileupload')
 
 mongoose.connect('mongodb+srv://hotel:12@cluster0.kwtl9.mongodb.net/')
 .then(()=>{
@@ -15,8 +17,17 @@ mongoose.connect('mongodb+srv://hotel:12@cluster0.kwtl9.mongodb.net/')
 
 // app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
-app.use('/cat',userCateory)
+app.use('/cat',cateoryRoute)
+app.use('/blo',blogRoute)
 
+// app.use(fileupload({
+//         useTempFiles:true
+// }))
+app.use('*',(req,res)=>{
+        res.status(200).json({
+                ma:'bad request'
+        })
+})
 
 
 module.exports = app;
