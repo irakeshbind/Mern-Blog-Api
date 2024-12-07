@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser')
 const cateoryRoute = require('./routes/category');
 const blogRoute = require('./routes/blog')
+const userRoute = require('./routes/user')
 const mongoose = require('mongoose');
 // const fileupload = require('express-fileupload')
 
@@ -19,6 +20,7 @@ mongoose.connect('mongodb+srv://hotel:12@cluster0.kwtl9.mongodb.net/')
 app.use(bodyParser.json())
 app.use('/cat',cateoryRoute)
 app.use('/blo',blogRoute)
+app.use('/user',userRoute)
 
 // app.use(fileupload({
 //         useTempFiles:true
