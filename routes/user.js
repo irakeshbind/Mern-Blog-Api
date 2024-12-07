@@ -3,6 +3,7 @@ const router = express.Router()
 const mongoose = require('mongoose');
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 router.post('/sinup',(req,res)=>{
     console.log(req)
@@ -36,6 +37,52 @@ router.post('/sinup',(req,res)=>{
         }
     })
    
+})
+
+///
+router.post('/loin',(req,res)=>{
+    User.find({email:req.body.email})
+    .then(user=>{
+        if(user.length<1)
+        {
+            res.status(404).json({
+                ms:'user not found'
+            })
+        }
+        else
+        {
+            bcrypt.compare(req.body.password,user[0].password,(err,result)=>{
+                if(!result)
+                {
+                    res.status(401).json({
+                        ms:'password matcin fail'
+                    })
+                }
+                if(result)
+                {
+                    const token = jwt.sign({
+                        email:user[0].email,
+                        name:user[0].name
+                    },
+                    'sbs on line classes',
+                    {
+                        expiresIn:'23d'
+                    }
+                );
+                res.status(200).json({
+                    result:user[0],
+                    token:token
+                })
+                }
+            })
+        }
+    })
+    .catch(err=>{
+        console.log(err)
+        res.status(500).json({
+            error:err
+        })
+    })
 })
 
 
